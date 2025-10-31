@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bam Design</title>
+  <meta name="color-scheme" content="light dark">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    :root{
+      --bg1:#ff8a00;
+      --bg2:#e52e71;
+      --bg3:#00c6ff;
+      --glass: rgba(255,255,255,0.12);
+      --card-alpha: 0.18;
+      --accent: #ffd700;
+      --wa-green: #25D366;
+      --max-width: 1100px;
+    }
+
+    /* Reset & base */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #fff;
+      text-align: center;
+      min-height:100%;
+      background: linear-gradient(270deg, var(--bg1), var(--bg2), var(--bg3));
+      background-size: 600% 600%;
+      animation: bgFlow 12s ease infinite;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+      padding-bottom:140px; /* alan bırak WhatsApp için */
+    }
+
+    @keyframes bgFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Container */
+    .container{max-width:var(--max-width);margin:20px auto;padding:0 16px}
+
+    /* Header with logo + nav */
+    header.site-header{
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(6px);
+      border-radius:14px;
+      padding:16px;
+      margin-bottom:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      animation: fadeIn .9s ease both;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img.logo{
+      width:72px;height:72px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,0.06);padding:8px;
+    }
+    .brand .text{ text-align:left }
+    .brand .text .title{ font-weight:600;font-size:1.25rem; color:#fff; letter-spacing:0.6px }
+    .brand .text .tag{ font-size:0.82rem; opacity:0.9; margin-top:4px }
+
+    nav.site-nav a{
+      color:#fff;text-decoration:none;margin:0 10px;font-weight:600;
+    }
+    nav.site-nav a:hover{ color:var(--accent) }
+
+    /* Sections */
+    section{margin:18px 0;padding:22px;border-radius:12px;animation: fadeInUp .9s ease both}
+    #about{ background: var(--glass) }
+    #gallery{ background: rgba(255,255,255,0.06) }
+    #contact{ background: var(--glass) }
+
+    h2{ font-size:1.4rem; margin-bottom:10px }
+    p.lead{ color: rgba(255,255,255,0.95); line-height:1.45 }
+
+    /* Products grid */
+    #products{ display:flex; flex-wrap:wrap; gap:18px; justify-content:center; align-items:flex-start }
+    .product{
+      width:250px;
+      background: rgba(255,255,255,var(--card-alpha));
+      border-radius:12px;
+      padding:12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      transition: transform .22s ease, box-shadow .22s ease;
+      overflow:hidden;
+      opacity:0; transform:translateY(18px);
+      animation: cardPop .9s ease forwards;
+    }
+    .product:nth-child(1){ animation-delay:.35s }
+    .product:nth-child(2){ animation-delay:.65s }
+    .product:nth-child(3){ animation-delay:.95s }
+    .product:nth-child(4){ animation-delay:1.25s }
+    .product:nth-child(5){ animation-delay:1.55s }
+
+    .product:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 20px 40px rgba(0,0,0,0.36) }
+    .product img{ width:100%; height:160px; object-fit:cover; border-radius:8px }
+    .product h3{ color:#fff; margin-top:10px; font-size:1.05rem }
+    .product p{ color: rgba(255,255,255,0.95); margin-top:6px; font-size:.95rem }
+    .product .price{ margin-top:8px; font-weight:700; color:#fff; opacity:0.95 }
+
+    @keyframes cardPop { to { opacity:1; transform: translateY(0) } }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:none } }
+
+    /* Footer */
+    footer.site-footer{
+      margin-top:28px;
+      background: rgba(0,0,0,0.28);
+      border-radius:10px;
+      padding:16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    footer .links a{ color: rgba(255,255,255,0.95); text-decoration:underline; margin-right:8px }
+
+    /* Responsive */
+    @media (max-width:900px){
+      header.site-header{ flex-direction:column; align-items:flex-start }
+      .brand img.logo{ width:56px; height:56px }
+      .product{ width:92% }
+    }
+
+    /* WhatsApp wrapper/button/popup */
+    .wa-wrapper{
+      position:fixed; right:18px; bottom:18px; z-index:9999;
+      display:flex; flex-direction:column; align-items:flex-end; gap:10px; pointer-events:none;
+    }
+    .wa-popup{
+      background:#fff; color:#111; border-radius:12px; padding:10px 12px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.25); max-width:300px;
+      transform-origin:right bottom; font-weight:600; display:flex; gap:10px; align-items:center;
+      pointer-events:auto; opacity:0; transform:translateY(10px) scale(.98);
+    }
+    .wa-popup.show{ opacity:1; transform:translateY(0) scale(1); transition: all .28s cubic-bezier(.2,.9,.3,1) }
+    .wa-popup .text{ font-size:0.95rem }
+    .wa-popup .close{ margin-left:6px; background:transparent; border:0; font-weight:700; cursor:pointer; color:#777; font-size:18px }
+
+    .wa-btn{
+      width:56px; height:56px; border-radius:50%;
+      display:inline-grid; place-items:center;
+      background:var(--wa-green); box-shadow:0 10px 30px rgba(37,211,102,0.22);
+      border:0; cursor:pointer; pointer-events:auto; transition: transform .18s ease;
+    }
+    .wa-btn:hover{ transform: scale(1.06) }
+    .wa-btn svg{ width:28px; height:28px; fill:#fff }
+
+    .wa-bounce{ animation:bounce 2.5s infinite }
+    @keyframes bounce{ 0%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } 100%{ transform:translateY(0) } }
+
+    /* Small accessible focus outline */
+    a:focus, button:focus { outline: 3px solid rgba(255,255,255,0.2); outline-offset:3px }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="site-header" role="banner" aria-label="Üst bilgi">
+      <div class="brand" aria-hidden="false">
+        <!-- Put your logo.png in same folder. If not found, 'onerror' will hide the img so layout keeps stable -->
+        <img src="logo.png" alt="Bam Design Logo" class="logo" onerror="this.style.display='none'">
+        <div class="text">
+          <div class="title">Bam Design</div>
+          <div class="tag">Renkli • Enerjik • El emeği</div>
+        </div>
+      </div>
+
+      <nav class="site-nav" role="navigation" aria-label="Site menüsü">
+        <a href="#about">Hakkımda</a>
+        <a href="#gallery">Ürünler</a>
+        <a href="#contact">İletişim</a>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <!-- About (left blank to edit later) -->
+      <section id="about" aria-labelledby="about-heading">
+        <h2 id="about-heading">Hakkımda</h2>
+        <p class="lead" style="opacity:.85; font-style:italic;">
+          <!-- Hakkımda metnini sonradan buraya ekleyebilirsin -->
+          (Hakkımda metni sonradan buraya eklenecek)
+        </p>
+      </section>
+
+      <!-- Gallery -->
+      <section id="gallery" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">Ürünler</h2>
+        <div id="products" role="list">
+          <!-- Product 1 -->
+          <article class="product" role="listitem" aria-labelledby="p1-title">
+            <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80" alt="Renkli Bez Çanta - Bam Design">
+            <h3 id="p1-title">Renkli Bez Çanta</h3>
+            <p>Günlük kullanım için el yapımı bez çanta.</p>
+            <div class="price">249 TL</div>
+          </article>
+
+          <!-- Product 2 -->
+          <article class="product" role="listitem" aria-labelledby="p2-title">
+            <img src="https://images.unsplash.com/photo-1600180758890-6b94519a09a7?auto=format&fit=crop&w=800&q=80" alt="Doğal Taş Kolye - Bam Design">
+            <h3 id="p2-title">Doğal Taş Kolye</h3>
+            <p>Enerjini yansıtan sade ve zarif tasarım.</p>
+            <div class="price">189 TL</div>
+          </article>
+
+          <!-- Product 3 -->
+          <article class="product" role="listitem" aria-labelledby="p3-title">
+            <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80" alt="Çiçek Desenli Elbise - Bam Design">
+            <h3 id="p3-title">Çiçek Desenli Elbise</h3>
+            <p>Yaz günleri için hafif ve enerjik kumaş.</p>
+            <div class="price">349 TL</div>
+          </article>
+
+          <!-- Product 4 -->
+          <article class="product" role="listitem" aria-labelledby="p4-title">
+            <img src="https://images.unsplash.com/photo-1618354691373-d851c9d4aaf7?auto=format&fit=crop&w=800&q=80" alt="Minimal Bileklik Seti - Bam Design">
+            <h3 id="p4-title">Minimal Bileklik Seti</h3>
+            <p>3’lü kombin bileklik seti – el emeği detaylarla.</p>
+            <div class="price">159 TL</div>
+          </article>
+
+          <!-- Product 5 -->
+          <article class="product" role="listitem" aria-labelledby="p5-title">
+            <img src="https://images.unsplash.com/photo-1542060748-10c28b62716d?auto=format&fit=crop&w=800&q=80" alt="Kadife Omuz Çantası - Bam Design">
+            <h3 id="p5-title">Kadife Omuz Çantası</h3>
+            <p>Klasik ve modern çizgiyi bir araya getiren tasarım.</p>
+            <div class="price">299 TL</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">İletişim</h2>
+        <p style="margin:.25rem 0;">Instagram: <a href="https://instagram.com/busrabodur12" target="_blank" rel="noopener">@busrabodur12</a></p>
+        <p style="margin:.25rem 0;">Dolap: <a href="https://dolap.com/profil/bamdesigntr" target="_blank" rel="noopener">bamdesigntr</a></p>
+        <p style="margin:.25rem 0;">Email: <a href="mailto:info@bamdesign.com">info@bamdesign.com</a></p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+      <div>© <strong>Bam Design</strong> — 2025</div>
+      <div class="links">
+        <a href="https://instagram.com/busrabodur12" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://dolap.com/profil/bamdesigntr" target="_blank" rel="noopener">Dolap</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- WhatsApp popup & button -->
+  <div class="wa-wrapper" aria-hidden="false">
+    <div id="waPopup" class="wa-popup" role="dialog" aria-live="polite" aria-label="WhatsApp mesaj">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12.04 2C6.48 2 2 6.48 2 12.04c0 1.99.52 3.84 1.43 5.45L2 22l4.74-1.42A9.99 9.99 0 0 0 12.04 22C17.6 22 22 17.52 22 11.96 22 6.4 17.6 2 12.04 2z" fill="#25D366"/>
+          <path d="M17.1 14.3c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.78.98-.95 1.18-.17.2-.33.23-.63.08-.3-.15-1.27-.46-2.41-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.018-.46.13-.61.13-.12.3-.33.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.55-.08-.17-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51-.17-.02-.37-.02-.57-.02-.2 0-.52.07-.8.3-.27.23-1.05 1.02-1.05 2.48 0 1.46 1.08 2.88 1.23 3.08.15.2 2.12 3.3 5.14 4.62 3.02 1.32 3.02.88 3.56.82.53-.06 1.72-.7 1.97-1.38.25-.69.25-1.27.18-1.38-.07-.11-.27-.17-.57-.32z" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="text">Merhaba 🤗 Detaylı Bilgi İçin Tıkla !</div>
+      <button id="waDismiss" class="close" aria-label="Kapat">×</button>
+    </div>
+
+    <a id="waBtn" class="wa-btn wa-bounce" href="https://wa.me/905394304845?text=Merhaba%20%F0%9F%A4%97%20Detayl%C4%B1%20Bilgi%20%C4%B0%C3%A7in%20T%C4%B1kla%20%21" target="_blank" rel="noopener" aria-label="WhatsApp ile mesaj gönder">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M20.52 3.48A11.88 11.88 0 0 0 12 .5C6.21.5 1.5 5.21 1.5 11c0 1.94.51 3.76 1.47 5.34L.5 23.5l7.32-2.18c1.49.4 3.06.61 4.68.61 5.79 0 10.5-4.71 10.5-10.5 0-2.82-1.1-5.47-3.48-7.95zM12 20.5c-1.46 0-2.89-.32-4.17-.92l-.3-.14-4.36 1.3 1.26-3.22-.17-.34A8.89 8.89 0 0 1 3.5 11c0-4.7 3.8-8.5 8.5-8.5 4.7 0 8.5 3.8 8.5 8.5 0 4.7-3.8 8.5-8.5 8.5z"/>
+        <path d="M17.3 14.2c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.78.98-.95 1.18-.17.2-.33.23-.63.08-.3-.15-1.27-.46-2.41-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.018-.46.13-.61.13-.12.3-.33.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.55-.08-.17-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51-.17-.02-.37-.02-.57-.02-.2 0-.52.07-.8.3-.27.23-1.05 1.02-1.05 2.48 0 1.46 1.08 2.88 1.23 3.08.15.2 2.12 3.3 5.14 4.62 3.02 1.32 3.02.88 3.56.82.53-.06 1.72-.7 1.97-1.38.25-.69.25-1.27.18-1.38z" fill="#fff"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Popup script -->
+  <script>
+    (function(){
+      const waPopup = document.getElementById('waPopup');
+      const waDismiss = document.getElementById('waDismiss');
+      const waBtn = document.getElementById('waBtn');
+
+      function showPopup(){ waPopup.classList.add('show'); }
+      function hidePopup(){ waPopup.classList.remove('show'); }
+
+      window.addEventListener('load', function(){
+        // otomatik aç / kapat
+        setTimeout(showPopup, 1100);
+        setTimeout(hidePopup, 7000);
+      });
+
+      waDismiss.addEventListener('click', function(e){
+        e.preventDefault();
+        hidePopup();
+      });
+
+      waBtn.addEventListener('click', function(){
+        hidePopup();
+      });
+
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') hidePopup();
+      });
+
+      // Eğer logo yoksa (onerror ile gizlenir) header stilini küçük bir düzeltme
+      window.addEventListener('DOMContentLoaded', function(){
+        const logo = document.querySelector('img.logo');
+        if(logo && logo.style.display === 'none'){
+          // küçük uyarlama: brand içerisindeki text ortalansın
+          const brandText = document.querySelector('.brand .text');
+          if(brandText) brandText.style.marginLeft = '6px';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
